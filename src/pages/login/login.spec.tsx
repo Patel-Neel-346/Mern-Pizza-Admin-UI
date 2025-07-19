@@ -1,0 +1,14 @@
+import { describe, expect, it } from 'vitest';
+import { render, screen } from '@testing-library/react';
+import Login from './Login';
+describe('login here', () => {
+  it('should render with required fields', () => {
+    //AAA format here
+    render(<Login />);
+
+    //getBt->throws error
+    //findBy->Async
+    //queryBy->same as get but not throw error just return null
+    expect(screen.getByText(/sign in/)).toBeInTheDocument();
+  });
+});
