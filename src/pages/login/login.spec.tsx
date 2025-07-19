@@ -18,7 +18,7 @@ describe('login here', () => {
     expect(screen.getByRole('button', { name: 'Login' })).toBeInTheDocument();
 
     expect(
-      screen.getByRole('checkbox', { name: 'Remember-Me' }),
+      screen.getByRole('checkbox', { name: 'Remember Me' }),
     ).toBeInTheDocument();
 
     expect(screen.getByText('Forgot Password')).toBeInTheDocument();
