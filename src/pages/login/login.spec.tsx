@@ -9,6 +9,18 @@ describe('login here', () => {
     //getBt->throws error
     //findBy->Async
     //queryBy->same as get but not throw error just return null
-    expect(screen.getByText(/sign in/)).toBeInTheDocument();
+    expect(screen.getByText(/Sign in/)).toBeInTheDocument();
+
+    expect(screen.getByPlaceholderText('Username')).toBeInTheDocument();
+
+    expect(screen.getByPlaceholderText('Password')).toBeInTheDocument();
+
+    expect(screen.getByRole('button', { name: 'Login' })).toBeInTheDocument();
+
+    expect(
+      screen.getByRole('checkbox', { name: 'Remember-Me' }),
+    ).toBeInTheDocument();
+
+    expect(screen.getByText('Forgot Password')).toBeInTheDocument();
   });
 });
