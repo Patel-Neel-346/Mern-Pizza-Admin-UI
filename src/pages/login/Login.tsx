@@ -5,14 +5,6 @@ import { LockFilled, LockOutlined, UserOutlined } from '@ant-design/icons';
 function Login() {
   return (
     <>
-      {/* <h1> Sign in </h1>
-      <input type='text' placeholder='Username' />
-      <input type='password' placeholder='Password' />
-      <label htmlFor='remember-me'>Remember-Me</label>
-      <input type='checkbox' id='remember-me' />   
-      <a href='#'>Forgot Password</a>
-      <button>Login</button> */}
-
       <Layout
         style={{ height: '100vh', display: 'grid', placeItems: 'center' }}
       >
@@ -61,18 +53,44 @@ function Login() {
               </Space>
             }
           >
-            <Form>
-              <Form.Item name='Username'>
+            <Form
+              initialValues={{
+                Remember: true,
+                Username: 'test@gmail.com',
+                Password: '123456',
+              }}
+            >
+              <Form.Item
+                name='Username'
+                rules={[
+                  {
+                    required: true,
+                    message: 'Please input your UserName',
+                  },
+                  {
+                    type: 'email',
+                    message: 'Email is not valid',
+                  },
+                ]}
+              >
                 <Input prefix={<UserOutlined />} placeholder='Username'></Input>
               </Form.Item>
-              <Form.Item name='Password'>
+              <Form.Item
+                name='Password'
+                rules={[
+                  {
+                    required: true,
+                    message: 'Please input your Password',
+                  },
+                ]}
+              >
                 <Input.Password
                   prefix={<LockOutlined />}
                   placeholder='Password'
                 ></Input.Password>
               </Form.Item>
-              <Form.Item name='Remember Me'>
-                <Checkbox>Remember Me</Checkbox>
+              <Form.Item name='Remember' valuePropName='checked'>
+                <Checkbox name='remember'>Remember Me</Checkbox>
                 <a href=''>Forgot Password</a>
               </Form.Item>
               <Form.Item>
