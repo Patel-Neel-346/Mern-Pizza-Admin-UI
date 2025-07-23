@@ -1,8 +1,21 @@
 // import React from 'react'
 import { Layout, Card, Space, Form, Input, Checkbox, Button, Flex } from 'antd';
 import { LockFilled, LockOutlined, UserOutlined } from '@ant-design/icons';
+import { useMutation } from '@tanstack/react-query';
+import type { Credential } from '../../types';
+
+const loginUser = async (userData: Credential) => {
+  //server call logic
+  console.log('Userdata Here With Email and Password', userData);
+};
 
 function Login() {
+  const { mutate } = useMutation({
+    mutationKey: ['login'],
+    mutationFn: loginUser,
+    onSuccess: async () => console.log('login Successfull'),
+  });
+
   return (
     <>
       <Layout
@@ -58,6 +71,13 @@ function Login() {
                 Remember: true,
                 Username: 'test@gmail.com',
                 Password: '123456',
+              }}
+              onFinish={value => {
+                console.log(value);
+                mutate({
+                  email: value.Username,
+                  password: value.Password,
+                });
               }}
             >
               <Form.Item
