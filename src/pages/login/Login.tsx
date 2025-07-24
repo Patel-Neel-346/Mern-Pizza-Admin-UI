@@ -11,9 +11,10 @@ import {
   Alert,
 } from 'antd';
 import { LockFilled, LockOutlined, UserOutlined } from '@ant-design/icons';
-import { useMutation } from '@tanstack/react-query';
+import { useMutation, useQuery } from '@tanstack/react-query';
 import type { Credential } from '../../types';
-import { login } from '../../http/api';
+import { login, self } from '../../http/api';
+// import { data } from 'react-router-dom';
 
 const loginUser = async (userData: Credential) => {
   //server call logic
@@ -21,12 +22,27 @@ const loginUser = async (userData: Credential) => {
   const { data } = await login(userData);
   return data;
 };
+const getSelf = async () => {
+  const { data } = await self();
+  // console.log('Self Data in getSelf', data);
+  return data;
+};
 
 function Login() {
+  const { data: selfData, refetch } = useQuery({
+    queryKey: ['self'],
+    queryFn: getSelf,
+    enabled: false, // Disable auto-fetching on mount
+  });
+
   const { mutate, isPending, isError, error } = useMutation({
     mutationKey: ['login'],
     mutationFn: loginUser,
-    onSuccess: async () => console.log('login Successfull'),
+    onSuccess: async () => {
+      refetch(); // Refetch self data after successful login
+      console.log(selfData);
+      console.log('Login successful');
+    },
   });
 
   return (
