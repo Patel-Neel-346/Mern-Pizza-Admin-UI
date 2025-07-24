@@ -1,4 +1,6 @@
-import { User } from '../types/index';
+// import { User } from '../types/index';
+
+import type { User } from '../types';
 
 export const usePermission = () => {
   const allowedRoles = ['admin ', 'manager'];
