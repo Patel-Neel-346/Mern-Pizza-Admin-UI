@@ -7,7 +7,6 @@ import {
   Input,
   Checkbox,
   Button,
-  Flex,
   Alert,
 } from 'antd';
 import { LockFilled, LockOutlined, UserOutlined } from '@ant-design/icons';
@@ -17,12 +16,14 @@ import { login, self, logout } from '../../http/api';
 import { useAuthStore } from '../../store/store';
 // import { data } from 'react-router-dom';
 import { usePermission } from '../../hooks/userPermission';
+
 const loginUser = async (userData: Credential) => {
   //server call logic
   console.log('Userdata Here With Email and Password', userData);
   const { data } = await login(userData);
   return data;
 };
+
 const getSelf = async () => {
   const { data } = await self();
   // console.log('Self Data in getSelf', data);
