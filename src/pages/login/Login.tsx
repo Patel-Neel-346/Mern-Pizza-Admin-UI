@@ -1,5 +1,15 @@
 // import React from 'react'
-import { Layout, Card, Space, Form, Input, Checkbox, Button, Flex } from 'antd';
+import {
+  Layout,
+  Card,
+  Space,
+  Form,
+  Input,
+  Checkbox,
+  Button,
+  Flex,
+  Alert,
+} from 'antd';
 import { LockFilled, LockOutlined, UserOutlined } from '@ant-design/icons';
 import { useMutation } from '@tanstack/react-query';
 import type { Credential } from '../../types';
@@ -13,7 +23,7 @@ const loginUser = async (userData: Credential) => {
 };
 
 function Login() {
-  const { mutate } = useMutation({
+  const { mutate, isPending, isError, error } = useMutation({
     mutationKey: ['login'],
     mutationFn: loginUser,
     onSuccess: async () => console.log('login Successfull'),
@@ -83,6 +93,13 @@ function Login() {
                 });
               }}
             >
+              {isError && (
+                <Alert
+                  style={{ marginBottom: 16 }}
+                  type='error'
+                  message={error.message}
+                />
+              )}
               <Form.Item
                 name='Username'
                 rules={[
@@ -121,6 +138,7 @@ function Login() {
                   type='primary'
                   htmlType='submit'
                   style={{ width: '100%' }}
+                  loading={isPending}
                 >
                   Login
                 </Button>
