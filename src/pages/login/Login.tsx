@@ -16,7 +16,7 @@ import type { Credential } from '../../types';
 import { login, self, logout } from '../../http/api';
 import { useAuthStore } from '../../store/store';
 // import { data } from 'react-router-dom';
-
+import { usePermission } from '../../hooks/userPermission';
 const loginUser = async (userData: Credential) => {
   //server call logic
   console.log('Userdata Here With Email and Password', userData);
@@ -31,6 +31,8 @@ const getSelf = async () => {
 
 function Login() {
   const { setUser, logout: logoutFromStore } = useAuthStore();
+
+  const { isAllowed } = usePermission();
   const { refetch } = useQuery({
     queryKey: ['self'],
     queryFn: getSelf,
@@ -43,12 +45,14 @@ function Login() {
     onSuccess: async () => {
       const response = await refetch(); // Refetch self data after successful login
 
-      if (response.data.role === 'customer') {
+      if (!isAllowed(response.data.role)) {
         await logout();
 
         logoutFromStore();
         return;
       }
+      // if (response.data.role === 'customer') {
+      // }
 
       // console.log(response.data);
       setUser(response.data);

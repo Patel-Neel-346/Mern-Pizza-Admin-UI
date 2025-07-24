@@ -1,10 +1,18 @@
 import { describe, expect, it } from 'vitest';
 import { render, screen } from '@testing-library/react';
 import Login from './Login';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+
+const queryClient = new QueryClient();
 describe('login here', () => {
   it('should render with required fields', () => {
     //AAA format here
-    render(<Login />);
+
+    render(
+      <QueryClientProvider client={queryClient}>
+        <Login />
+      </QueryClientProvider>,
+    );
 
     //getBt->throws error
     //findBy->Async
