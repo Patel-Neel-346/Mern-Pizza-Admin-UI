@@ -7,3 +7,5 @@ export const login = (credentails: Credential) =>
   api.post('/auth/login', credentails);
 
 export const self = () => api.get('/auth/self');
+
+export const logout = () => api.post('/auth/logout');

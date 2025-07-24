@@ -13,7 +13,7 @@ import {
 import { LockFilled, LockOutlined, UserOutlined } from '@ant-design/icons';
 import { useMutation, useQuery } from '@tanstack/react-query';
 import type { Credential } from '../../types';
-import { login, self } from '../../http/api';
+import { login, self, logout } from '../../http/api';
 import { useAuthStore } from '../../store/store';
 // import { data } from 'react-router-dom';
 
@@ -30,8 +30,8 @@ const getSelf = async () => {
 };
 
 function Login() {
-  const { setUser, logout } = useAuthStore();
-  const { data: selfData, refetch } = useQuery({
+  const { setUser, logout: logoutFromStore } = useAuthStore();
+  const { refetch } = useQuery({
     queryKey: ['self'],
     queryFn: getSelf,
     enabled: false, // Disable auto-fetching on mount
@@ -42,6 +42,13 @@ function Login() {
     mutationFn: loginUser,
     onSuccess: async () => {
       const response = await refetch(); // Refetch self data after successful login
+
+      if (response.data.role === 'customer') {
+        await logout();
+
+        logoutFromStore();
+        return;
+      }
 
       // console.log(response.data);
       setUser(response.data);
