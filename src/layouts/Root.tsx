@@ -3,7 +3,7 @@ import { self } from '../http/api';
 import { useQuery } from '@tanstack/react-query';
 import { useAuthStore } from '../store/store';
 import { useEffect } from 'react';
-import { Flex, Spin } from 'antd';
+import { Flex, Skeleton, Spin } from 'antd';
 import { AxiosError } from 'axios';
 
 const getSelf = async () => {
@@ -41,6 +41,7 @@ const Root = () => {
         }}
       >
         <Spin size='large' />
+        {/* <Skeleton /> */}
       </Flex>
     );
   }

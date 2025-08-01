@@ -16,6 +16,7 @@ import { login, self, logout } from '../../http/api';
 import { useAuthStore } from '../../store/store';
 // import { data } from 'react-router-dom';
 import { usePermission } from '../../hooks/userPermission';
+import Logo from '../../components/icons/Logo';
 
 const loginUser = async (userData: Credential) => {
   //server call logic
@@ -75,7 +76,7 @@ function Login() {
               alignItems: 'center',
             }}
           >
-            <svg
+            {/* <svg
               width='93'
               height='23'
               viewBox='0 0 93 23'
@@ -93,7 +94,9 @@ function Login() {
                 stroke='#F65F42'
                 stroke-width='7'
               />
-            </svg>
+            </svg> */}
+
+            <Logo />
           </Layout.Content>
 
           <Card

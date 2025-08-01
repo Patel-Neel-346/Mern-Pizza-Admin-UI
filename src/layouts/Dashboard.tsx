@@ -232,9 +232,7 @@ const Dashboard = () => {
             </div> */}
             <Outlet />
           </Content>
-          <Footer style={{ textAlign: 'center' }}>
-            Mern Pizaa ©{new Date().getFullYear()} Created by Developer
-          </Footer>
+          <Footer style={{ textAlign: 'center' }}>Mernspace pizza shop</Footer>
         </Layout>
       </Layout>
       <Outlet />
