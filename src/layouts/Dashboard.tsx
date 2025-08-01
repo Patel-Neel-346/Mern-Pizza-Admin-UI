@@ -1,7 +1,21 @@
 import { Navigate, NavLink, Outlet } from 'react-router-dom';
 import { useAuthStore } from '../store/store';
-import { Layout, Menu, theme } from 'antd';
-import Icon, { HomeOutlined, UserOutlined } from '@ant-design/icons';
+import {
+  Avatar,
+  Badge,
+  Dropdown,
+  Flex,
+  Layout,
+  Menu,
+  Space,
+  theme,
+} from 'antd';
+import Icon, {
+  BellFilled,
+  BellOutlined,
+  HomeOutlined,
+  UserOutlined,
+} from '@ant-design/icons';
 import { useState } from 'react';
 import Logo from '../components/icons/Logo';
 import { foodIcon } from '../components/icons/Food';
@@ -9,6 +23,8 @@ import Home from '../components/icons/Home';
 import BasketIcon from '../components/icons/BasketIcon';
 import GiftIcon from '../components/icons/GiftIcon';
 import UserIcon from '../components/icons/UserIcon';
+import { useMutation } from '@tanstack/react-query';
+import { logout } from '../http/api';
 // import Sider from 'antd/es/layout/Sider';
 
 const { Sider, Header, Content, Footer } = Layout;
@@ -74,6 +90,17 @@ const Dashboard = () => {
   const { user } = useAuthStore();
   const [collapsed, setCollapsed] = useState(false);
 
+  const { logout: logoutFromStore } = useAuthStore();
+
+  const { mutate: logoutMutate } = useMutation({
+    mutationKey: ['logout'],
+    mutationFn: logout,
+    onSuccess: async () => {
+      logoutFromStore();
+      return;
+    },
+  });
+
   const {
     token: { colorBgContainer, borderRadiusLG },
   } = theme.useToken();
@@ -120,7 +147,72 @@ const Dashboard = () => {
           />
         </Sider>
         <Layout>
-          <Header style={{ padding: 0, background: colorBgContainer }} />
+          {/* <Header
+            style={{
+              paddingLeft: '16px',
+              paddingRight: '40px',
+              background: colorBgContainer,
+            }}
+          >
+            <Flex gap='middle' align='start' justify='space-between'>
+              <Badge
+                text='Global'
+                // color='yellow'
+                status='success'
+                // style={{ background: colorBgContainer }}
+              ></Badge>
+
+              <Space>
+                <Badge dot={true} count={1}>
+                  <BellOutlined />
+                </Badge>
+              </Space>
+            </Flex>
+          </Header> */}
+          <Header
+            style={{
+              paddingLeft: '16px',
+              paddingRight: '16px',
+              background: colorBgContainer,
+            }}
+          >
+            <Flex gap='middle' align='start' justify='space-between'>
+              <Badge
+                text={
+                  //   user.role === 'admin' ? 'You are an admin' : user.tenant?.name
+                  'You are an admin'
+                }
+                status='success'
+              />
+              <Space size={16} align='center'>
+                <Badge dot={true} style={{ marginTop: '6px' }}>
+                  <BellFilled style={{ marginTop: '6px' }} />
+                </Badge>
+                <Dropdown
+                  menu={{
+                    items: [
+                      {
+                        key: 'logout',
+                        label: 'Logout',
+                        onClick: () => logoutMutate(),
+                      },
+                    ],
+                  }}
+                  placement='bottomRight'
+                >
+                  <Avatar
+                    style={{
+                      backgroundColor: '#fde3cf',
+                      color: '#f56a00',
+                      height: '30px',
+                    }}
+                  >
+                    U
+                  </Avatar>
+                </Dropdown>
+              </Space>
+            </Flex>
+          </Header>
           <Content style={{ margin: '0 16px' }}>
             {/* <Breadcrumb
               style={{ margin: '16px 0' }}
