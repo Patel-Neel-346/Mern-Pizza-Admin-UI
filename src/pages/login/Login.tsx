@@ -19,7 +19,7 @@ import { usePermission } from '../../hooks/userPermission';
 
 const loginUser = async (userData: Credential) => {
   //server call logic
-  console.log('Userdata Here With Email and Password', userData);
+  // console.log('Userdata Here With Email and Password', userData);
   const { data } = await login(userData);
   return data;
 };
@@ -46,7 +46,7 @@ function Login() {
     onSuccess: async () => {
       const response = await refetch(); // Refetch self data after successful login
 
-      if (!isAllowed(response.data.role)) {
+      if (!isAllowed(response.data)) {
         await logout();
 
         logoutFromStore();
@@ -58,7 +58,7 @@ function Login() {
       // console.log(response.data);
       setUser(response.data);
       // console.log(selfData);
-      console.log('Login successful');
+      // console.log('Login successful');
     },
   });
 
@@ -119,7 +119,7 @@ function Login() {
                 Password: '123456',
               }}
               onFinish={value => {
-                console.log(value);
+                // console.log(value);
                 mutate({
                   email: value.Username,
                   password: value.Password,
