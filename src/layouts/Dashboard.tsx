@@ -12,9 +12,9 @@ import {
 } from 'antd';
 import Icon, {
   BellFilled,
-  BellOutlined,
-  HomeOutlined,
-  UserOutlined,
+  //   BellOutlined,
+  //   HomeOutlined,
+  //   UserOutlined,
 } from '@ant-design/icons';
 import { useState } from 'react';
 import Logo from '../components/icons/Logo';
@@ -102,7 +102,7 @@ const Dashboard = () => {
   });
 
   const {
-    token: { colorBgContainer, borderRadiusLG },
+    token: { colorBgContainer },
   } = theme.useToken();
   if (user === null) {
     return <Navigate to='/auth/login' replace={true} />;
@@ -179,8 +179,10 @@ const Dashboard = () => {
             <Flex gap='middle' align='start' justify='space-between'>
               <Badge
                 text={
-                  //   user.role === 'admin' ? 'You are an admin' : user.tenant?.name
-                  'You are an admin'
+                  user.role === 'admin'
+                    ? 'You are an admin'
+                    : `${user.tenats?.name}`
+                  //   'You are an admin'
                 }
                 status='success'
               />

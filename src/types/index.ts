@@ -2,12 +2,19 @@ export interface Credential {
   email: string;
   password: string;
 }
+
+export interface Tenants {
+  id: number;
+  name: string;
+  address: string;
+}
 export interface User {
   id: number;
   firstName: string;
   lastName: string;
   email: string;
   role: string;
+  tenats: Tenants;
 }
 
 export interface AuthState {

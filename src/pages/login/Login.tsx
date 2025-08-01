@@ -115,8 +115,8 @@ function Login() {
             <Form
               initialValues={{
                 Remember: true,
-                Username: 'test@gmail.com',
-                Password: '123456',
+                Username: 'neelpatel1@gmail.com',
+                Password: '12345678',
               }}
               onFinish={value => {
                 // console.log(value);

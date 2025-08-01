@@ -13,7 +13,7 @@ const getSelf = async () => {
 
 const Root = () => {
   const { setUser } = useAuthStore();
-  const { data, isLoading, error } = useQuery({
+  const { data, isLoading } = useQuery({
     queryKey: ['self'],
     queryFn: getSelf,
     enabled: true,
