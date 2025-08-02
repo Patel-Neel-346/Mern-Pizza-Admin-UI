@@ -2,10 +2,78 @@
 
 import { RightOutlined } from '@ant-design/icons';
 import { useQuery } from '@tanstack/react-query';
-import { Breadcrumb } from 'antd';
+import { Breadcrumb, Space, Table, Tag, type TableProps } from 'antd';
 import { Link } from 'react-router-dom';
 import { users } from '../../http/api';
 import type { User } from '../../types';
+const columns: TableProps<User>['columns'] = [
+  {
+    title: 'Name',
+    dataIndex: 'firstName',
+    key: 'firstName',
+    render: text => <a>{text}</a>,
+  },
+  {
+    title: 'lastName',
+    dataIndex: 'lastName',
+    key: 'lastName',
+    render: text => <a>{text}</a>,
+  },
+  {
+    title: 'email',
+    dataIndex: 'email',
+    key: 'email',
+    render: text => <a>{text}</a>,
+  },
+  {
+    title: 'role',
+    dataIndex: 'role',
+    key: 'role',
+    render: text => <a>{text}</a>,
+  },
+  {
+    title: 'Tenant',
+    key: 'tenats', // match API name
+    dataIndex: 'tenats',
+    render: tenant => {
+      if (!tenant) {
+        return <Tag color='default'>No tenant</Tag>;
+      }
+      return <Tag color='blue'>{tenant.name}</Tag>;
+    },
+  },
+
+  // {
+  //   title: 'Tenants',
+  //   key: 'tenants',
+  //   dataIndex: 'tenants',
+  //   render: (_, { tenants }) => (
+  //     <>
+  //       {tenants.map((tag) => {
+  //         let color = tag.length > 5 ? 'geekblue' : 'green';
+  //         if (tag === 'loser') {
+  //           color = 'volcano';
+  //         }
+  //         return (
+  //           <Tag color={color} key={tag}>
+  //             {tag.toUpperCase()}
+  //           </Tag>
+  //         );
+  //       })}
+  //     </>
+  //   ),
+  // },
+  // {
+  //   title: 'Role',
+  //   key: 'role',
+  //   render: (_, record) => (
+  //     <Space size="middle">
+  //       <a>Invite {record.name}</a>
+  //       <a>Delete</a>
+  //     </Space>
+  //   ),
+  // },
+];
 
 function User() {
   const { data, isLoading, isError, error } = useQuery({
@@ -33,14 +101,15 @@ function User() {
       ) : isError ? (
         <div>Error: {error.message}</div>
       ) : (
-        <div>
-          <h1>Users List</h1>
-          <ul>
-            {data?.data.map((user: User) => (
-              <li key={user.id}>{user.firstName}</li>
-            ))}
-          </ul>
-        </div>
+        <Table<User> columns={columns} dataSource={data?.data ?? []} />
+        // <div>
+        //   <h1>Users List</h1>
+        //   <ul>
+        //     {data?.data.map((user: User) => (
+        //       <li key={user.id}>{user.firstName}</li>
+        //     ))}
+        //   </ul>
+        // </div>
       )}
     </>
   );

@@ -181,7 +181,7 @@ const Dashboard = () => {
                 text={
                   user.role === 'admin'
                     ? 'You are an admin'
-                    : `${user.tenats?.name}`
+                    : `${user.tenants?.name}`
                   //   'You are an admin'
                 }
                 status='success'

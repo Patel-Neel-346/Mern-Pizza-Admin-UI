@@ -8,13 +8,14 @@ export interface Tenants {
   name: string;
   address: string;
 }
+
 export interface User {
   id: number;
   firstName: string;
   lastName: string;
   email: string;
   role: string;
-  tenats: Tenants;
+  tenants: Tenants; // plural & array
 }
 
 export interface AuthState {
