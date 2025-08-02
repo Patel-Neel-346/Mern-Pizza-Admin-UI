@@ -235,7 +235,6 @@ const Dashboard = () => {
           <Footer style={{ textAlign: 'center' }}>Mernspace pizza shop</Footer>
         </Layout>
       </Layout>
-      <Outlet />
     </div>
   );
 };
