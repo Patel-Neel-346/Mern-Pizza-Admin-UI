@@ -215,7 +215,7 @@ const Dashboard = () => {
               </Space>
             </Flex>
           </Header>
-          <Content style={{ margin: '0 16px' }}>
+          <Content style={{ margin: '24px' }}>
             {/* <Breadcrumb
               style={{ margin: '16px 0' }}
               items={[{ title: 'User' }, { title: 'Bill' }]}
