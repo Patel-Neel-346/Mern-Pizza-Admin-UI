@@ -58,37 +58,79 @@ const { Sider, Header, Content, Footer } = Layout;
 //     label: <NavLink to={'/proms'}>Proms</NavLink>,
 //   },
 // ];
-const items = [
-  {
-    key: '/',
-    icon: <Icon component={Home} />,
-    label: <NavLink to='/'>Home</NavLink>,
-  },
-  {
-    key: '/users',
-    icon: <Icon component={UserIcon} />,
-    label: <NavLink to='/users'>Users</NavLink>,
-  },
-  {
-    key: '/products',
-    icon: <Icon component={foodIcon} />,
-    label: <NavLink to='/products'>Products</NavLink>,
-  },
-  {
-    key: '/orders',
-    icon: <Icon component={BasketIcon} />,
-    label: <NavLink to='/orders'>Orders</NavLink>,
-  },
-  {
-    key: '/promos',
-    icon: <Icon component={GiftIcon} />,
-    label: <NavLink to='/promos'>Promos</NavLink>,
-  },
-];
+
+const getMenuItems = (role: string) => {
+  const baseItems = [
+    {
+      key: '/',
+      icon: <Icon component={Home} />,
+      label: <NavLink to='/'>Home</NavLink>,
+    },
+    {
+      key: '/products',
+      icon: <Icon component={foodIcon} />,
+      label: <NavLink to='/products'>Products</NavLink>,
+    },
+    {
+      key: '/orders',
+      icon: <Icon component={BasketIcon} />,
+      label: <NavLink to='/orders'>Orders</NavLink>,
+    },
+    {
+      key: '/promos',
+      icon: <Icon component={GiftIcon} />,
+      label: <NavLink to='/promos'>Promos</NavLink>,
+    },
+  ];
+
+  if (role === 'admin') {
+    return [
+      ...baseItems,
+      {
+        key: '/users',
+        icon: <Icon component={UserIcon} />,
+        label: <NavLink to='/users'>Users</NavLink>,
+      },
+    ];
+  }
+
+  return baseItems;
+};
+
+// Replace 'admin' with the actual role from your auth store
+
+// const items = [
+//   {
+//     key: '/',
+//     icon: <Icon component={Home} />,
+//     label: <NavLink to='/'>Home</NavLink>,
+//   },
+//   {
+//     key: '/users',
+//     icon: <Icon component={UserIcon} />,
+//     label: <NavLink to='/users'>Users</NavLink>,
+//   },
+//   {
+//     key: '/products',
+//     icon: <Icon component={foodIcon} />,
+//     label: <NavLink to='/products'>Products</NavLink>,
+//   },
+//   {
+//     key: '/orders',
+//     icon: <Icon component={BasketIcon} />,
+//     label: <NavLink to='/orders'>Orders</NavLink>,
+//   },
+//   {
+//     key: '/promos',
+//     icon: <Icon component={GiftIcon} />,
+//     label: <NavLink to='/promos'>Promos</NavLink>,
+//   },
+// ];
 
 const Dashboard = () => {
   const { user } = useAuthStore();
   const [collapsed, setCollapsed] = useState(false);
+  const items = getMenuItems(user?.role as string);
 
   const { logout: logoutFromStore } = useAuthStore();
 
@@ -181,8 +223,11 @@ const Dashboard = () => {
                 text={
                   user.role === 'admin'
                     ? 'You are an admin'
-                    : `${user.tenants?.name}`
-                  //   'You are an admin'
+                    : `${
+                        user.tenants?.name
+                          ? user.tenants?.name
+                          : 'You dont have a tenant'
+                      }`
                 }
                 status='success'
               />
