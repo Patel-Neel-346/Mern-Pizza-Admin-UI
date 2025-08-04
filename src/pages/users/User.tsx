@@ -8,6 +8,13 @@ import { users } from '../../http/api';
 import type { User } from '../../types';
 const columns: TableProps<User>['columns'] = [
   {
+    title: 'ID',
+    dataIndex: 'id',
+    key: 'id',
+    render: text => <a>{text}</a>,
+  },
+
+  {
     title: 'Name',
     dataIndex: 'firstName',
     key: 'firstName',
@@ -37,9 +44,9 @@ const columns: TableProps<User>['columns'] = [
     dataIndex: 'tenats',
     render: tenant => {
       if (!tenant) {
-        return <Tag color='default'>No tenant</Tag>;
+        return <Tag color=''>No tenant</Tag>;
       }
-      return <Tag color='blue'>{tenant.name}</Tag>;
+      return <Tag color='green'>{tenant.name}</Tag>;
     },
   },
 
@@ -84,33 +91,35 @@ function User() {
   });
   return (
     <>
-      <Breadcrumb
-        separator={<RightOutlined />}
-        items={[
-          {
-            title: <Link to='/'>Dashboard</Link>,
-          },
-          {
-            title: 'Users',
-          },
-        ]}
-      />
+      <Space direction='vertical' size={'large'} style={{ width: '100%' }}>
+        <Breadcrumb
+          separator={<RightOutlined />}
+          items={[
+            {
+              title: <Link to='/'>Dashboard</Link>,
+            },
+            {
+              title: 'Users',
+            },
+          ]}
+        />
 
-      {isLoading ? (
-        <div>Loading...</div>
-      ) : isError ? (
-        <div>Error: {error.message}</div>
-      ) : (
-        <Table<User> columns={columns} dataSource={data?.data ?? []} />
-        // <div>
-        //   <h1>Users List</h1>
-        //   <ul>
-        //     {data?.data.map((user: User) => (
-        //       <li key={user.id}>{user.firstName}</li>
-        //     ))}
-        //   </ul>
-        // </div>
-      )}
+        {isLoading ? (
+          <div>Loading...</div>
+        ) : isError ? (
+          <div>Error: {error.message}</div>
+        ) : (
+          <Table<User> columns={columns} dataSource={data?.data ?? []} />
+          // <div>
+          //   <h1>Users List</h1>
+          //   <ul>
+          //     {data?.data.map((user: User) => (
+          //       <li key={user.id}>{user.firstName}</li>
+          //     ))}
+          //   </ul>
+          // </div>
+        )}
+      </Space>
     </>
   );
 }
