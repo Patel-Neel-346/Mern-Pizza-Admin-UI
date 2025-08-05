@@ -7,24 +7,25 @@ import { Option } from 'antd/es/mentions';
 import Search from 'antd/es/transfer/search';
 // import { Children } from 'react';
 // import Item from 'antd/es/list/Item';
-import { Form } from 'react-router-dom';
 
-function UserFilter() {
+type UserFilterProps = {
+  children?: React.ReactNode;
+};
+
+function UserFilter({ children }: UserFilterProps) {
   return (
     // <div>UserFilter</div>
     <Card
       style={{
         flexDirection: 'column',
         justifyContent: 'center',
-        padding: '20px',
+        // padding: '0px',
       }}
     >
       <Row
         justify='space-between'
         // padding='0px'
-        style={{
-          padding: '0px',
-        }}
+        // gutter={20}
         // align="middle" // Optional if you want vertical centering
       >
         {/* Left side: search + select */}
@@ -83,9 +84,7 @@ function UserFilter() {
             alignItems: 'center',
           }}
         >
-          <Button type='primary' icon={<PlusOutlined />}>
-            Add User
-          </Button>
+          {children}
         </Col>
       </Row>
     </Card>

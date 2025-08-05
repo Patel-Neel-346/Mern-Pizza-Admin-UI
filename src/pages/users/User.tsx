@@ -1,12 +1,21 @@
 // import React from 'react'
 
-import { RightOutlined } from '@ant-design/icons';
+import { PlusOutlined, RightOutlined } from '@ant-design/icons';
 import { useQuery } from '@tanstack/react-query';
-import { Breadcrumb, Space, Table, Tag, type TableProps } from 'antd';
+import {
+  Breadcrumb,
+  Button,
+  Drawer,
+  Space,
+  Table,
+  Tag,
+  theme,
+  type TableProps,
+} from 'antd';
 import { Link, Navigate } from 'react-router-dom';
 import { users } from '../../http/api';
 import type { User } from '../../types';
-import { use } from 'react';
+import React, { use } from 'react';
 import { useAuthStore } from '../../store/store';
 import UserFilter from './UserFilter';
 const columns: TableProps<User>['columns'] = [
@@ -87,6 +96,15 @@ const columns: TableProps<User>['columns'] = [
 
 function User() {
   const { user } = useAuthStore();
+  const [drawerOpen, setDrawerOpen] = React.useState(false);
+
+  if (user === null) {
+    return <Navigate to='/login' replace={true} />;
+  }
+
+  const {
+    token: { colorBgLayout },
+  } = theme.useToken();
 
   if ((user as User)?.role !== 'admin') {
     return <Navigate to={'/'} replace={true} />;
@@ -118,8 +136,44 @@ function User() {
           <div>Error: {error.message}</div>
         ) : (
           <>
-            <UserFilter />
+            <UserFilter>
+              <Button
+                type='primary'
+                onClick={() => setDrawerOpen(true)}
+                icon={<PlusOutlined />}
+              >
+                Add User
+              </Button>
+            </UserFilter>
             <Table<User> columns={columns} dataSource={data?.data ?? []} />
+
+            <Drawer
+              title='User Details'
+              width={720}
+              style={{ backgroundColor: colorBgLayout }}
+              destroyOnHidden={true}
+              open={drawerOpen}
+              onClose={() => {
+                setDrawerOpen(false);
+                console.log('Drawer closed');
+              }}
+              extra={
+                <Space>
+                  <Space>
+                    <Button onClick={() => setDrawerOpen(false)}>Cancel</Button>
+                    <Button type='primary'>Submit</Button>
+                  </Space>
+                </Space>
+              }
+            >
+              <p>Drawer content goes here</p>
+              {/* You can add more content or components here */}
+
+              <p>
+                This is a placeholder for user details. You can customize it
+                further.
+              </p>
+            </Drawer>
           </>
         )}
       </Space>
