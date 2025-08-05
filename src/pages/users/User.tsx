@@ -8,6 +8,7 @@ import { users } from '../../http/api';
 import type { User } from '../../types';
 import { use } from 'react';
 import { useAuthStore } from '../../store/store';
+import UserFilter from './UserFilter';
 const columns: TableProps<User>['columns'] = [
   {
     title: 'ID',
@@ -116,15 +117,10 @@ function User() {
         ) : isError ? (
           <div>Error: {error.message}</div>
         ) : (
-          <Table<User> columns={columns} dataSource={data?.data ?? []} />
-          // <div>
-          //   <h1>Users List</h1>
-          //   <ul>
-          //     {data?.data.map((user: User) => (
-          //       <li key={user.id}>{user.firstName}</li>
-          //     ))}
-          //   </ul>
-          // </div>
+          <>
+            <UserFilter />
+            <Table<User> columns={columns} dataSource={data?.data ?? []} />
+          </>
         )}
       </Space>
     </>
