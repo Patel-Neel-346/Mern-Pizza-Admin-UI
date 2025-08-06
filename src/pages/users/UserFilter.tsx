@@ -1,7 +1,7 @@
 // import React from 'react'
 
-import { PlusOutlined } from '@ant-design/icons';
-import { Button, Card, Col, Input, Row, Select } from 'antd';
+// import { PlusOutlined } from '@ant-design/icons';
+import { Card, Col, Row, Select } from 'antd';
 import FormItem from 'antd/es/form/FormItem';
 import { Option } from 'antd/es/mentions';
 import Search from 'antd/es/transfer/search';
@@ -9,10 +9,11 @@ import Search from 'antd/es/transfer/search';
 // import Item from 'antd/es/list/Item';
 
 type UserFilterProps = {
+  onFilterChange: (filterName: string, filterValue: string) => void;
   children?: React.ReactNode;
 };
 
-function UserFilter({ children }: UserFilterProps) {
+function UserFilter({ onFilterChange, children }: UserFilterProps) {
   return (
     // <div>UserFilter</div>
     <Card
@@ -49,7 +50,12 @@ function UserFilter({ children }: UserFilterProps) {
               }}
             >
               <FormItem name='q' style={{ margin: 0 }}>
-                <Search placeholder='Search' />
+                <Search
+                  placeholder='Search'
+                  onChange={e =>
+                    onFilterChange('UserSearchQuery', e.target.value)
+                  }
+                />
               </FormItem>
             </Col>
 
@@ -65,6 +71,7 @@ function UserFilter({ children }: UserFilterProps) {
                   allowClear
                   placeholder='Select role'
                   style={{ width: '100%' }}
+                  onChange={e => onFilterChange('roleFilter', e)}
                 >
                   <Option value='admin'>Admin</Option>
                   <Option value='manager'>Manager</Option>

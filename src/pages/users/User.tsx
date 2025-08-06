@@ -136,7 +136,11 @@ function User() {
           <div>Error: {error.message}</div>
         ) : (
           <>
-            <UserFilter>
+            <UserFilter
+              onFilterChange={(filterName, filterValue) => {
+                console.log(`Filter changed: ${filterName} = ${filterValue}`);
+              }}
+            >
               <Button
                 type='primary'
                 onClick={() => setDrawerOpen(true)}
