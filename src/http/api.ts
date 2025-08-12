@@ -11,3 +11,5 @@ export const self = () => api.get('/auth/self');
 export const logout = () => api.get('/auth/logout');
 
 export const users = () => api.get('/users');
+
+export const tenants = () => api.get('/tenants');

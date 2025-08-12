@@ -5,12 +5,12 @@ type TenantsFilterProps = {
 };
 const TenantFilter = ({ children }: TenantsFilterProps) => {
   return (
-    <Card>
+    <Card style={{ padding: '8px 16px' }}>
       <Row justify='space-between'>
         <Col span={16}>
           <Row gutter={20}>
             <Col span={12}>
-              <Form.Item name='q'>
+              <Form.Item name='q' style={{ marginBottom: 0 }}>
                 <Input.Search allowClear={true} placeholder='Search' />
               </Form.Item>
             </Col>

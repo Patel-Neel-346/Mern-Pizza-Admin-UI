@@ -4,6 +4,8 @@ import { Form, Link, Navigate } from 'react-router-dom';
 import { PlusOutlined, RightOutlined } from '@ant-design/icons';
 import React from 'react';
 import TenantFilter from './TenantsFilter';
+import { useQuery } from '@tanstack/react-query';
+import { tenants } from '../../http/api';
 const columns = [
   {
     title: 'ID',
@@ -58,16 +60,23 @@ const Tenants = () => {
 
   const { user } = useAuthStore();
 
-  const queryClient = useQueryClient();
-  const { mutate: tenantMutate } = useMutation({
-    mutationKey: ['tenant'],
-    mutationFn: async (data: CreateTenantData) =>
-      createTenant(data).then(res => res.data),
-    onSuccess: async () => {
-      queryClient.invalidateQueries({ queryKey: ['tenants'] });
-      return;
+  const { data, isLoading, isError, error } = useQuery({
+    queryKey: ['tenants'],
+    queryFn: () => {
+      return tenants().then(response => response.data);
     },
   });
+
+  // const queryClient = useQueryClient();
+  // const { mutate: tenantMutate } = useMutation({
+  //   mutationKey: ['tenant'],
+  //   mutationFn: async (data: CreateTenantData) =>
+  //     createTenant(data).then(res => res.data),
+  //   onSuccess: async () => {
+  //     queryClient.invalidateQueries({ queryKey: ['tenants'] });
+  //     return;
+  //   },
+  // });
 
   //   const onHandleSubmit = async () => {
   //     await form.validateFields();
@@ -135,7 +144,7 @@ const Tenants = () => {
 
         <Table
           columns={columns}
-          dataSource={[]}
+          dataSource={data?.data ?? []}
           rowKey={'id'}
           //   pagination={{
           //     total: tenants?.total,

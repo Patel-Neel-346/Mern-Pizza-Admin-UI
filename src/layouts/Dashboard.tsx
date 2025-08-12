@@ -67,9 +67,9 @@ const getMenuItems = (role: string) => {
       label: <NavLink to='/'>Home</NavLink>,
     },
     {
-      key: '/products',
+      key: '/restaurants',
       icon: <Icon component={foodIcon} />,
-      label: <NavLink to='/products'>Restaurants</NavLink>,
+      label: <NavLink to='/restaurants'>Restaurants</NavLink>,
     },
     {
       key: '/orders',
