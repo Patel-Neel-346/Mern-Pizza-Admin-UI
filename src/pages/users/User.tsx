@@ -18,6 +18,7 @@ import type { User } from '../../types';
 import React, { use } from 'react';
 import { useAuthStore } from '../../store/store';
 import UserFilter from './UserFilter';
+import UserForm from './forms/UserForm';
 const columns: TableProps<User>['columns'] = [
   {
     title: 'ID',
@@ -154,7 +155,7 @@ function User() {
             <Drawer
               title='User Details'
               width={720}
-              style={{ backgroundColor: colorBgLayout }}
+              styles={{ body: { backgroundColor: colorBgLayout } }}
               destroyOnHidden={true}
               open={drawerOpen}
               onClose={() => {
@@ -170,13 +171,7 @@ function User() {
                 </Space>
               }
             >
-              <p>Drawer content goes here</p>
-              {/* You can add more content or components here */}
-
-              <p>
-                This is a placeholder for user details. You can customize it
-                further.
-              </p>
+              <UserForm />
             </Drawer>
           </>
         )}

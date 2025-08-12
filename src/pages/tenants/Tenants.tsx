@@ -6,6 +6,8 @@ import React from 'react';
 import TenantFilter from './TenantsFilter';
 import { useQuery } from '@tanstack/react-query';
 import { tenants } from '../../http/api';
+import UserForm from '../users/forms/UserForm';
+import TenantsForm from './forms/TenantsForm';
 const columns = [
   {
     title: 'ID',
@@ -185,6 +187,8 @@ const Tenants = () => {
             </Space>
           }
         >
+          {/* <UserForm /> */}
+          <TenantsForm />
           {/* <Form layout='vertical' form={form}>
             <TenantForm />
           </Form> */}
