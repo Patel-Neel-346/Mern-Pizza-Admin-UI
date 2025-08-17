@@ -15,7 +15,7 @@ import {
 import { Link, Navigate } from 'react-router-dom';
 import { users } from '../../http/api';
 import type { User } from '../../types';
-import React, { use } from 'react';
+import React from 'react';
 import { useAuthStore } from '../../store/store';
 import UserFilter from './UserFilter';
 import UserForm from './forms/UserForm';
