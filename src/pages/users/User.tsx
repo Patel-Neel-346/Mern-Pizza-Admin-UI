@@ -8,6 +8,12 @@ import { users } from '../../http/api';
 import type { User } from '../../types';
 const columns: TableProps<User>['columns'] = [
   {
+    title: 'id',
+    dataIndex: 'id',
+    key: 'id',
+    render: text => <a>{text}</a>,
+  },
+  {
     title: 'Name',
     dataIndex: 'firstName',
     key: 'firstName',
