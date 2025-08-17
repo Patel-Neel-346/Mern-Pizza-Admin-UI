@@ -1,18 +1,32 @@
 // import React from 'react'
 
-import { RightOutlined } from '@ant-design/icons';
+import { PlusOutlined, RightOutlined } from '@ant-design/icons';
 import { useQuery } from '@tanstack/react-query';
-import { Breadcrumb, Space, Table, Tag, type TableProps } from 'antd';
-import { Link } from 'react-router-dom';
+import {
+  Breadcrumb,
+  Button,
+  Drawer,
+  Space,
+  Table,
+  Tag,
+  theme,
+  type TableProps,
+} from 'antd';
+import { Link, Navigate } from 'react-router-dom';
 import { users } from '../../http/api';
 import type { User } from '../../types';
+import React, { use } from 'react';
+import { useAuthStore } from '../../store/store';
+import UserFilter from './UserFilter';
+import UserForm from './forms/UserForm';
 const columns: TableProps<User>['columns'] = [
   {
-    title: 'id',
+    title: 'ID',
     dataIndex: 'id',
     key: 'id',
     render: text => <a>{text}</a>,
   },
+
   {
     title: 'Name',
     dataIndex: 'firstName',
@@ -43,9 +57,9 @@ const columns: TableProps<User>['columns'] = [
     dataIndex: 'tenats',
     render: tenant => {
       if (!tenant) {
-        return <Tag color='default'>No tenant</Tag>;
+        return <Tag color=''>No tenant</Tag>;
       }
-      return <Tag color='blue'>{tenant.name}</Tag>;
+      return <Tag color='green'>{tenant.name}</Tag>;
     },
   },
 
@@ -82,6 +96,20 @@ const columns: TableProps<User>['columns'] = [
 ];
 
 function User() {
+  const { user } = useAuthStore();
+  const [drawerOpen, setDrawerOpen] = React.useState(false);
+
+  if (user === null) {
+    return <Navigate to='/login' replace={true} />;
+  }
+
+  const {
+    token: { colorBgLayout },
+  } = theme.useToken();
+
+  if ((user as User)?.role !== 'admin') {
+    return <Navigate to={'/'} replace={true} />;
+  }
   const { data, isLoading, isError, error } = useQuery({
     queryKey: ['users'],
     queryFn: () => {
@@ -90,33 +118,64 @@ function User() {
   });
   return (
     <>
-      <Breadcrumb
-        separator={<RightOutlined />}
-        items={[
-          {
-            title: <Link to='/'>Dashboard</Link>,
-          },
-          {
-            title: 'Users',
-          },
-        ]}
-      />
+      <Space direction='vertical' size={'large'} style={{ width: '100%' }}>
+        <Breadcrumb
+          separator={<RightOutlined />}
+          items={[
+            {
+              title: <Link to='/'>Dashboard</Link>,
+            },
+            {
+              title: 'Users',
+            },
+          ]}
+        />
 
-      {isLoading ? (
-        <div>Loading...</div>
-      ) : isError ? (
-        <div>Error: {error.message}</div>
-      ) : (
-        <Table<User> columns={columns} dataSource={data?.data ?? []} />
-        // <div>
-        //   <h1>Users List</h1>
-        //   <ul>
-        //     {data?.data.map((user: User) => (
-        //       <li key={user.id}>{user.firstName}</li>
-        //     ))}
-        //   </ul>
-        // </div>
-      )}
+        {isLoading ? (
+          <div>Loading...</div>
+        ) : isError ? (
+          <div>Error: {error.message}</div>
+        ) : (
+          <>
+            <UserFilter
+              onFilterChange={(filterName, filterValue) => {
+                console.log(`Filter changed: ${filterName} = ${filterValue}`);
+              }}
+            >
+              <Button
+                type='primary'
+                onClick={() => setDrawerOpen(true)}
+                icon={<PlusOutlined />}
+              >
+                Add User
+              </Button>
+            </UserFilter>
+            <Table<User> columns={columns} dataSource={data?.data ?? []} />
+
+            <Drawer
+              title='User Details'
+              width={720}
+              styles={{ body: { backgroundColor: colorBgLayout } }}
+              destroyOnHidden={true}
+              open={drawerOpen}
+              onClose={() => {
+                setDrawerOpen(false);
+                console.log('Drawer closed');
+              }}
+              extra={
+                <Space>
+                  <Space>
+                    <Button onClick={() => setDrawerOpen(false)}>Cancel</Button>
+                    <Button type='primary'>Submit</Button>
+                  </Space>
+                </Space>
+              }
+            >
+              <UserForm />
+            </Drawer>
+          </>
+        )}
+      </Space>
     </>
   );
 }
