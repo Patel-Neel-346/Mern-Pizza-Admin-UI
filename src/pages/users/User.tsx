@@ -6,7 +6,9 @@ import {
   Breadcrumb,
   Button,
   Drawer,
+  Flex,
   Space,
+  Spin,
   Table,
   Tag,
   theme,
@@ -132,7 +134,18 @@ function User() {
         />
 
         {isLoading ? (
-          <div>Loading...</div>
+          <div>
+            <Flex
+              style={{
+                height: '100vh',
+                justifyContent: 'center',
+                alignItems: 'center',
+              }}
+            >
+              <Spin size='large' />
+              {/* <Skeleton /> */}
+            </Flex>
+          </div>
         ) : isError ? (
           <div>Error: {error.message}</div>
         ) : (
