@@ -7,6 +7,7 @@ import {
   Button,
   Drawer,
   Flex,
+  Form,
   Space,
   Spin,
   Table,
@@ -100,6 +101,7 @@ const columns: TableProps<User>['columns'] = [
 function User() {
   const { user } = useAuthStore();
   const [drawerOpen, setDrawerOpen] = React.useState(false);
+  const [form] = Form.useForm();
 
   if (user === null) {
     return <Navigate to='/login' replace={true} />;
@@ -118,6 +120,19 @@ function User() {
       return users().then(response => response.data);
     },
   });
+
+
+  const onHandleSubmit = () => {
+    form.validateFields().then(values => {
+      console.log('Form values:', values);
+      // form.getFieldValue()
+      // console.log('Submit clicked', form.getFieldValue((values: any) => { console.log(values) }));
+
+    }).catch(info => {
+      console.log('Validate Failed:', info);
+    });
+    //ts-ignore
+  }
   return (
     <>
       <Space direction='vertical' size={'large'} style={{ width: '100%' }}>
@@ -179,12 +194,15 @@ function User() {
                 <Space>
                   <Space>
                     <Button onClick={() => setDrawerOpen(false)}>Cancel</Button>
-                    <Button type='primary'>Submit</Button>
+                    <Button onClick={onHandleSubmit} type='primary'>Submit</Button>
                   </Space>
                 </Space>
               }
             >
-              <UserForm />
+
+              <Form layout='vertical' form={form}>
+                <UserForm />
+              </Form>
             </Drawer>
           </>
         )}

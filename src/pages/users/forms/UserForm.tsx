@@ -4,6 +4,8 @@ import { Card, Col, Form, Input, Row, Select, Space } from 'antd';
 // import { Form } from "react-router-dom";
 
 function UserForm() {
+
+
   return (
     <Row>
       <Col span={24}>
@@ -104,32 +106,32 @@ function UserForm() {
                   </Select>
                 </Form.Item>
               </Col>
-              {/* {selectedRole === 'manager' && (
-                                <Col span={12}>
-                                    <Form.Item
-                                        label="Restaurant"
-                                        name="tenantId"
-                                        rules={[
-                                            {
-                                                required: true,
-                                                message: 'Restaurant is required',
-                                            },
-                                        ]}>
-                                        <Select
-                                            size="large"
-                                            style={{ width: '100%' }}
-                                            allowClear={true}
-                                            onChange={() => {}}
-                                            placeholder="Select restaurant">
-                                            {tenants?.data.map((tenant: Tenant) => (
+              {/* {selectedRole === 'manager' && ( */}
+              <Col span={12}>
+                <Form.Item
+                  label="Restaurant"
+                  name="tenantId"
+                  rules={[
+                    {
+                      required: true,
+                      message: 'Restaurant is required',
+                    },
+                  ]}>
+                  <Select
+                    size="large"
+                    style={{ width: '100%' }}
+                    allowClear={true}
+                    onChange={() => { }}
+                    placeholder="Select restaurant">
+                    {/* {tenants?.data.map((tenant: Tenant) => (
                                                 <Select.Option value={tenant.id} key={tenant.id}>
                                                     {tenant.name}
                                                 </Select.Option>
-                                            ))}
-                                        </Select>
-                                    </Form.Item>
-                                </Col>
-                            )} */}
+                                            ))} */}
+                  </Select>
+                </Form.Item>
+              </Col>
+              {/* )} */}
             </Row>
           </Card>
         </Space>
