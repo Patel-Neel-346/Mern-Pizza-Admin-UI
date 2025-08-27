@@ -102,6 +102,7 @@ function User() {
   const { user } = useAuthStore();
   const [drawerOpen, setDrawerOpen] = React.useState(false);
   const [form] = Form.useForm();
+  const [currentEditingUser, setCurrentEditingUser] = React.useState<User | null>(null);
 
   if (user === null) {
     return <Navigate to='/login' replace={true} />;
@@ -201,7 +202,7 @@ function User() {
             >
 
               <Form layout='vertical' form={form}>
-                <UserForm />
+                <UserForm isEditMode={!!currentEditingUser} />
               </Form>
             </Drawer>
           </>

@@ -13,3 +13,6 @@ export const logout = () => api.get('/auth/logout');
 export const users = () => api.get('/users');
 
 export const tenants = () => api.get('/tenants');
+
+export const getTenants = (queryString: string) =>
+  api.get(`/tenants?${queryString}`);
