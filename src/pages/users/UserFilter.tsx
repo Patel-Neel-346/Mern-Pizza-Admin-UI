@@ -102,18 +102,19 @@
 // export default UserFilter;
 
 import React from 'react';
-import { Card, Col, Row, Select, Input, Button, Form } from 'antd';
+import { Card, Col, Row, Select, Input, Button, Form, type FormInstance } from 'antd';
 import { SearchOutlined, PlusOutlined } from '@ant-design/icons';
 
 const { Option } = Select;
 const FormItem = Form.Item;
 
-type UserFilterProps = {
+export interface UserFilterProps {
+  form: FormInstance<any>;
   onFilterChange: (filterName: string, filterValue: string) => void;
   children?: React.ReactNode;
-};
+}
 
-function UserFilter({ onFilterChange, children }: UserFilterProps) {
+function UserFilter({ form, onFilterChange, children }: UserFilterProps) {
   return (
     <Card style={{ padding: '8px 16px' }}>
       <Row justify='space-between' align='middle'>
